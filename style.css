@@ -1,0 +1,23 @@
+#weatherToday {
+    background-color: white;
+    min-height: 200px;
+}
+
+.days {
+    background-color: rgb(51, 175, 247);
+    min-height: 150px;
+}
+
+.white {
+    background-color: white;
+}
+
+.green {
+    background-color:rgb(62, 236, 62);
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.red {background-color: red;}
