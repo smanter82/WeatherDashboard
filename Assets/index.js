@@ -2,6 +2,9 @@
 //How do I get the weather icons to pop up on forecast?
 //How do I get the for loop to work on the 5 day forecast?  (Or do I have to have each day populate separately?)
 //Am I using .toFixed() correctly?
+//How do I get containers to empty on new search without making it keep from repopulating with the new data?
+
+//Don't forget to pull City search data back up on click of city in search history.
 
 //Populate Search History on page loading
 let storedHistory = JSON.parse(localStorage.getItem("searchHistory"))
@@ -48,6 +51,7 @@ function searchCity(){
         let windSpeed = response.wind.speed
 
         // $("#weatherToday").empty() <--Why does this make it so the box won't populate also on the button click.
+
         // Populate today's weather info
         $("h1").append(location + " (" + m + ")")
         $("#temp").append("Temperature: " + JSON.stringify(temperature) + " °F")
@@ -59,19 +63,21 @@ function searchCity(){
         //set latitude and longitude for UV Index ajax call.
         let lat = response.coord.lat
         let lon = response.coord.lon
+
+        //ajax call to get UV Index data from openweathermap.org
         let uvURL = `http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=2d589977b92f8d92891bc83cfda86d2c`
    
         $.ajax({
             url: uvURL,
             method: 'GET'
         }).then(function(uvData){
-            // console.log(uvData)
-            // console.log(uvData.value)
+            
             //set variable for UV Index data
             let uvIndex = uvData.value
             //Populate UV Index data to today's weather
             $("#uvI").append("UV Index: " + JSON.stringify(uvIndex))
-
+            
+            //Set color change according to UV Index.
             if (uvIndex < 3) {
                 $(`#uvI`).removeClass("white");
                 $(`#uvI`).removeClass("yellow");
@@ -89,7 +95,7 @@ function searchCity(){
                 $(`#uvI`).addClass("red");
             }
         })
-            //forecast URL is returning 401 (Unauthorized) error.
+            //Ajax call for 5-day forecast from openweathermap.org
             let forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=2d589977b92f8d92891bc83cfda86d2c`
 
             $.ajax({
@@ -104,14 +110,18 @@ function searchCity(){
 
             for (i=1; i<6; i++) {
                 console.log(forecast)
+
+                //Set icons for daily forecast
+
                 // let icon = forecast[i].weather[0].icon
                 // console.log(icon)
                 // $('img').append(icon)
 
                 let dailyTemp = forecast[i].temp.day
                 let dailyHumidity = forecast[i].humidity
-                console.log(dailyHumidity)
+
                 
+                //Populate 5-day forecast with temperature and humidity.
                 $('.dailyTemp').append('Temp: ' + dailyTemp + `<br>` + 'Humidity: ' + dailyHumidity).tofixed(2);
             
             
