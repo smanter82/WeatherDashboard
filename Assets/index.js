@@ -60,7 +60,7 @@ function searchCity(cityInput) {
     $("#wSpeed").empty();
 
     // Populate today's weather info
-    $("h1").append(location + " (" + m + ")");
+    $("h1").append(location + " (" + m + ")" + `<img id="day1Icon" src = "https://openweathermap.org/img/w/${response.weather[0].icon}.png">`);
     $("#temp").append("Temperature: " + JSON.stringify(temperature) + " °F");
     $("#humidity").append("Humidity: " + JSON.stringify(humidity) + "%");
     $("#wSpeed").append("Wind Speed: " + JSON.stringify(windSpeed) + "MPH");
