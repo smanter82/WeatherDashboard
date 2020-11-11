@@ -15,9 +15,9 @@ When the user opens the weather dashboard, the user is presented with the last s
 ## I learned:
 
 1) How to create multiple ajax calls to a third party API
-2) How to work a little more confidently with local storage.
+2) How to work more confidently with local storage.
 3) To be slightly more comfortable with JQuery and appending items to the page.
-4) How to clear search data in between searches.
+4) How to clear search data from the page in between searches so that it won't stack.
 5) How to get weather icons to pop up on the page.
 
 ## I struggled with:
