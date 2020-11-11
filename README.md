@@ -30,6 +30,6 @@ When the user opens the weather dashboard, the user is presented with the last s
 
 Screenshot:
 
-![Screenshot of Website](./Assets/Screenshot.png)
+![Screenshot of Website](./Assets/screenshot.png)
 
 Deployed Site:  https://smanter82.github.io/WeatherDashboard/
