@@ -1,7 +1,6 @@
 //I still need to:
-
-//Empty input text on click.
-//Page opens on weather data from last city searched. <--Was it supposed to be the new data for the last city?
+  //Empty input text on click.
+  //Page opens on weather data from last city searched. <--Was it supposed to be the new data for the last
 
 const forecastDays = $("#forecastDays")
 //Populate Search History on page loading
@@ -51,7 +50,7 @@ if (storedUV) {
       $(`#uvI`).addClass("red");
     }
 }
-
+//Populate 5 day forecast card with stored data.
 let storedDayCard = JSON.parse(localStorage.getItem("searchedDayCard"));
 
 if (storedDayCard) {
