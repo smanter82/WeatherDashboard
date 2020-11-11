@@ -1,13 +1,8 @@
 //I still need to:
 
-//Icon for City Search Button
+//Empty input text on click.
 
-//Get unix to come up as readable dates.
-    // $(document).ready(function() {
-    //   var value = $("#unixtime").val(); //this retrieves the unix timestamp
-    //   var dateString = moment(value).calendar(); 
-    //   alert(dateString);
-    // });
+
 
 
 const forecastDays = $("#forecastDays")
@@ -116,11 +111,12 @@ function searchCity(cityInput) {
 
       //Populate weather data for next 5 days.
       for (i = 1; i < 6; i++) {
-        console.log("Creating Card", i);
+        const forecastDate = forecast[i].dt
+        const dateString = moment.unix(forecastDate).format("MM/DD/YYYY")
         const dayCard = 
             `<div class="col">  
              <div class="card-body days">
-               <h6 id="day1">${forecast[i].dt}</h6>
+               <h6 id="day1">${dateString}</h6>
                <img id="day1Icon" src = "https://openweathermap.org/img/w/${forecastData.daily[i].weather[0].icon}.png">
                <p class="dailyTemp">${forecast[i].temp.day}</p>
                <p class="dailyHumidity">${forecast[i].humidity}</p>
