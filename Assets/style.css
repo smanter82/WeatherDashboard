@@ -1,3 +1,15 @@
+.pageTitle {
+    font-size: 40px;
+    font-weight: light;
+    background-color: rgb(65, 65, 65);
+    color: whitesmoke
+}
+
+#cityName {
+    color: white;
+    background-color: rgb(51, 175, 247);
+}
+
 #weatherToday {
     background-color: white;
     min-height: 200px;

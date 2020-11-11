@@ -1,9 +1,7 @@
 //I still need to:
 
 //Empty input text on click.
-
-
-
+//Page opens on weather data from last city searched. <--Was it supposed to be the new data for the last city?
 
 const forecastDays = $("#forecastDays")
 //Populate Search History on page loading
@@ -13,6 +11,55 @@ if (storedHistory) {
     $("#cityList").prepend(`<li class="list-group-item cityBtn">${item}</li>`)
   );
 }
+
+//Populate Today's Weather box with last previous search from local storage on loading.
+let storedDate = JSON.parse(localStorage.getItem("searchedDate"));
+let storedTemp = JSON.parse(localStorage.getItem("searchedTemp"));
+let storedHumid = JSON.parse(localStorage.getItem("searchedHumid"));
+let storedWS = JSON.parse(localStorage.getItem("searchedWS"));
+let storedUV = JSON.parse(localStorage.getItem("searchedUV"));
+
+if (storedDate) {
+  $("h1").append(storedDate)
+}
+if (storedTemp) {
+  $("#temp").append(storedTemp)
+}
+if (storedHumid) {
+  $("#humidity").append(storedHumid)
+}
+if (storedWS) {
+  $("#wSpeed").append(storedWS)
+}
+if (storedUV) {
+  $("#uvI").append("UV Index: " + storedUV)
+    //Set color change according to UV Index.
+    if (storedUV[0] < 3) {
+      $(`#uvI`).removeClass("white");
+      $(`#uvI`).removeClass("yellow");
+      $(`#uvI`).removeClass("red");
+      $(`#uvI`).addClass("green");
+    } else if (uvIndex >= 3 && uvIndex < 8) {
+      $(`#uvI`).removeClass("white");
+      $(`#uvI`).removeClass("green");
+      $(`#uvI`).removeClass("red");
+      $(`#uvI`).addClass("yellow");
+    } else {
+      $(`#uvI`).removeClass("white");
+      $(`#uvI`).removeClass("yellow");
+      $(`#uvI`).removeClass("green");
+      $(`#uvI`).addClass("red");
+    }
+}
+
+let storedDayCard = JSON.parse(localStorage.getItem("searchedDayCard"));
+
+if (storedDayCard) {
+  for (i = 1; i < 6; i++) {
+    $("#forecastDays").append(storedDayCard)
+  }
+}
+
 //Search for city weather on input button click.
 $("#cityName").on("click", function() {
   const cityInput = $("#cityInput").val();
@@ -58,7 +105,13 @@ function searchCity(cityInput) {
     $("h1").append(location + " (" + m + ")" + `<img id="day1Icon" src = "https://openweathermap.org/img/w/${response.weather[0].icon}.png">`);
     $("#temp").append("Temperature: " + JSON.stringify(temperature) + " °F");
     $("#humidity").append("Humidity: " + JSON.stringify(humidity) + "%");
-    $("#wSpeed").append("Wind Speed: " + JSON.stringify(windSpeed) + "MPH");
+    $("#wSpeed").append("Wind Speed: " + JSON.stringify(windSpeed) + " MPH");
+
+    localStorage.setItem("searchedDate", JSON.stringify(location + " (" + m + ")" + `<img id="day1Icon" src = "https://openweathermap.org/img/w/${response.weather[0].icon}.png">`));
+    localStorage.setItem("searchedTemp", JSON.stringify("Temperature: " + JSON.stringify(temperature) + " °F"));
+    localStorage.setItem("searchedHumid", JSON.stringify("Humidity: " + JSON.stringify(humidity) + "%"));
+    localStorage.setItem("searchedWS", JSON.stringify("Wind Speed: " + JSON.stringify(windSpeed) + " MPH"));
+
 
     //set latitude and longitude for UV Index ajax call.
     let lat = response.coord.lat;
@@ -95,7 +148,11 @@ function searchCity(cityInput) {
         $(`#uvI`).removeClass("green");
         $(`#uvI`).addClass("red");
       }
+      localStorage.setItem("searchedUV", JSON.stringify(JSON.stringify(uvIndex)));
     });
+
+    
+    
 
     //Ajax call for 5-day forecast from openweathermap.org
     let forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=2d589977b92f8d92891bc83cfda86d2c`;
@@ -118,12 +175,14 @@ function searchCity(cityInput) {
              <div class="card-body days">
                <h6 id="day1">${dateString}</h6>
                <img id="day1Icon" src = "https://openweathermap.org/img/w/${forecastData.daily[i].weather[0].icon}.png">
-               <p class="dailyTemp">${forecast[i].temp.day}</p>
-               <p class="dailyHumidity">${forecast[i].humidity}</p>
+               <p class="dailyTemp">Temp: ${forecast[i].temp.day}°F</p>
+               <p class="dailyHumidity">Humidity: ${forecast[i].humidity}%</p>
              </div>
              </div>`
         forecastDays.append(dayCard)
+        localStorage.setItem("searchedDayCard", JSON.stringify(dayCard));
       }
+      // localStorage.setItem("searchedDayCard", JSON.stringify(dayCard));
     });
   });
 }
