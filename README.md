@@ -28,4 +28,8 @@ When the user opens the weather dashboard, the user is presented with the last s
 
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
 
+Screenshot:
+
+![Screenshot of Website](./Assets/Screenshot.png)
+
 Deployed Site:  https://smanter82.github.io/WeatherDashboard/
